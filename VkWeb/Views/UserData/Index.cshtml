@@ -1,0 +1,54 @@
+﻿@model VkWeb.Models.UserDataModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>        
+        <p>Авторизация </p>
+
+        @using (Html.BeginForm("Index", "UserData"))
+        {
+    
+                <p>
+                    @Html.Label("Введите URL пользователя  ")
+                    @Html.TextBoxFor(x => x.URL)  
+                </p>
+                <p>
+                    @Html.Label("Введите дату  ")
+                    @Html.TextBoxFor(x => x.date)  
+                </p> 
+                <p>
+                    @Html.Label("Введите размер топа  ")
+                    @Html.TextBoxFor(x => x.quantity)  
+                </p> 
+            
+           <input type="submit" value="Провести тест" /> 
+
+
+                if (!string.IsNullOrWhiteSpace(ViewBag.URL))
+                {
+                    <p>URL = @ViewBag.URL</p>
+                    if (@ViewBag.URL != " ")
+                    {
+                        @Html.RouteLink("Просмотреть топ", new { controller = "Top", action = "Index", date = @ViewBag.date, quantity = @ViewBag.quantity });
+                        //@Html.ActionLink("Просмотреть топ", "Index", "Top");
+                    }
+                    else
+                    {
+                        @Html.Label("Что-то пошло не так")
+                    }
+                }   
+         }
+    </div>     
+        
+</body>
+</html>
