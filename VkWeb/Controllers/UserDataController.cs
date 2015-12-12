@@ -12,7 +12,7 @@ namespace VkWeb.Controllers
 {
     public class UserDataController : Controller
     {
-        public TopMadels top = null;
+        public TopMadel top = null;
 
         [HttpGet]
         public ActionResult Index()
@@ -23,21 +23,14 @@ namespace VkWeb.Controllers
         [HttpPost]
         public ActionResult Index(UserDataModel model)
         {
-            model.CorrectDate();
-            if (model.ComplianceTest() & model.CorrectDate() & model.CorrectQuantity())
+            //model.CorrectDate();
+            if (model.ComplianceTest())
             {
-                //if (model.CorrectDate())
-                //{
-                //    if (model.CorrectQuantity())
-                //    {                        
+                      
                 ViewBag.URL = model.URL;
-                ViewBag.date = model.date;
+                ViewBag.date = model.date.ToString("dd.MM.yyyy");
                 ViewBag.quantity = model.quantity;
                 ViewBag.userData = model;
-
-                //model.top = new TopMadels(model);
-                //    }
-                //}
             }
             else
             {

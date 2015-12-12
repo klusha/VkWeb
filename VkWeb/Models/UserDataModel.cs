@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -8,9 +9,14 @@ namespace VkWeb.Models
     public class UserDataModel
     {
         public String URL { set; get; }
-        public String date { set; get; }
-        public String quantity { set; get; }
-        //public TopMadels top;
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd'-'MM'-'yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Введите дату")]
+        public DateTime date { set; get; }
+
+        public int quantity { set; get; }
+
 
         public UserDataModel()
         {
@@ -22,7 +28,7 @@ namespace VkWeb.Models
             this.URL = this.URL.Trim();
             if (!string.IsNullOrWhiteSpace(this.URL))
             {
-                if (this.URL.StartsWith("http://vk.com/"))
+                if (this.URL.StartsWith("http://vk.com/") | this.URL.StartsWith("https://vk.com/"))
                 {
                     return true;
                 }
@@ -30,19 +36,19 @@ namespace VkWeb.Models
             return false;
         }
 
-        public bool CorrectDate()
-        {
-            this.date = this.date.Trim();
-            DateTime dt;
-            bool parse = DateTime.TryParse(this.date, out dt);
-            return parse;
-        }
+        //public bool CorrectDate()
+        //{
+        //    this.date = this.date.Trim();
+        //    DateTime dt;
+        //    bool parse = DateTime.TryParse(this.date, out dt);
+        //    return parse;
+        //}
 
-        public bool CorrectQuantity()
-        {
-            // Проверка на то что в поле quantity введено число
-            bool IsDigit = this.quantity.Length == this.quantity.Where(c => char.IsDigit(c)).Count();
-            return IsDigit;
-        }
+        //public bool CorrectQuantity()
+        //{
+        //    // Проверка на то что в поле quantity введено число
+        //    bool IsDigit = this.quantity.Length == this.quantity.Where(c => char.IsDigit(c)).Count();
+        //    return IsDigit;
+        //}
     }
 }

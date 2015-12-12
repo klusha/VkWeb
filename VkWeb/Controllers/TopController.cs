@@ -21,7 +21,7 @@ namespace VkWeb.Controllers
         [HttpGet]
         public ActionResult Index(String date, int quantity)
         {
-            TopMadels top = new TopMadels(date, quantity);
+            TopMadel top = new TopMadel(date, quantity);
             return View(top);
         }
 

@@ -118,6 +118,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\DBMaster.cs" />
+    <Compile Include="Models\HttpMaster.cs" />
+    <Compile Include="Models\JSONMaster.cs" />
     <Compile Include="Models\TopModel.cs" />
     <Compile Include="Models\UserDataModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

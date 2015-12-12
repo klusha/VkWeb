@@ -8,24 +8,71 @@ namespace VkWeb.Models
 {
     public class DBMaster
     {
-        private MySqlConnection MyConnection = null;
-        public void OpenConnection()
+        private readonly string connectionString = "Database=vk;Data Source=localhost;User Id=root;Password=; charset=utf8";
+        
+        public MySqlConnection OpenConnection()
         {
-            String Connect = "Database=vk;Data Source=localhost;User Id=root;Password=; charset=utf8";
-            MyConnection = new MySqlConnection(Connect);
+            var MyConnection = new MySqlConnection(connectionString);
             MyConnection.Open();
-        }
-
-        public MySqlConnection GetConnection()
-        {
             return MyConnection;
         }
 
-        public void CloseConnection()
+
+        public Dictionary<int, int> FindByDate(String date, int quantity, int idUser)
         {
-            MyConnection.Close();
+            int i = 0;
+            String SQL = "SELECT * FROM tops WHERE id_user = " + idUser + " AND data = (SELECT STR_TO_DATE('" + date + "', '%d.%m.%Y'))";
+            Dictionary<int, int> dictionaryTops = new Dictionary<int, int>();
+            try
+            {
+                MySqlCommand command = this.OpenConnection().CreateCommand();
+                command.CommandText = SQL;
+                command.ExecuteNonQuery();
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read() & (i < quantity))
+                    {
+                        dictionaryTops.Add(Convert.ToInt32(reader["id_group"]), Convert.ToInt32(reader["count"]));
+                        i++;
+                        //dateTops = reader["data"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+
+            return dictionaryTops;
         }
+
+        public String FindByIdGroup(int idGroup)
+        {
+            String SQL = "SELECT * FROM Groups WHERE id = " + idGroup;
+            String vkIDGroup = "";
+            try
+            {
+                MySqlCommand command = this.OpenConnection().CreateCommand();
+                command.CommandText = SQL;
+                command.ExecuteNonQuery();
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        vkIDGroup = reader["id_vk"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return vkIDGroup;
+        }
+
     }
+
+    
 }
 
 
