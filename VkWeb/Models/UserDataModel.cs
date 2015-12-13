@@ -35,20 +35,5 @@ namespace VkWeb.Models
             }
             return false;
         }
-
-        //public bool CorrectDate()
-        //{
-        //    this.date = this.date.Trim();
-        //    DateTime dt;
-        //    bool parse = DateTime.TryParse(this.date, out dt);
-        //    return parse;
-        //}
-
-        //public bool CorrectQuantity()
-        //{
-        //    // Проверка на то что в поле quantity введено число
-        //    bool IsDigit = this.quantity.Length == this.quantity.Where(c => char.IsDigit(c)).Count();
-        //    return IsDigit;
-        //}
     }
 }

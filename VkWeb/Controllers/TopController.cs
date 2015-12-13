@@ -12,12 +12,6 @@ namespace VkWeb.Controllers
 {
     public class TopController : Controller
     {
-        //[HttpGet]
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
         [HttpGet]
         public ActionResult Index(String date, int quantity)
         {

@@ -21,12 +21,15 @@ namespace VkWeb.Models
         public Dictionary<int, int> FindByDate(String date, int quantity, int idUser)
         {
             int i = 0;
-            String SQL = "SELECT * FROM tops WHERE id_user = " + idUser + " AND data = (SELECT STR_TO_DATE('" + date + "', '%d.%m.%Y'))";
+            //String SQL = "SELECT * FROM tops WHERE id_user = " + idUser + " AND data = (SELECT STR_TO_DATE('" + date + "', '%d.%m.%Y'))";
+            String SQL = "SELECT * FROM tops WHERE id_user = @idUser AND data = (SELECT STR_TO_DATE(@date, '%d.%m.%Y'))";
             Dictionary<int, int> dictionaryTops = new Dictionary<int, int>();
             try
             {
                 MySqlCommand command = this.OpenConnection().CreateCommand();
                 command.CommandText = SQL;
+                command.Parameters.AddWithValue("@idUser", idUser);
+                command.Parameters.AddWithValue("@date", date);
                 command.ExecuteNonQuery();
                 using (MySqlDataReader reader = command.ExecuteReader())
                 {
@@ -34,7 +37,6 @@ namespace VkWeb.Models
                     {
                         dictionaryTops.Add(Convert.ToInt32(reader["id_group"]), Convert.ToInt32(reader["count"]));
                         i++;
-                        //dateTops = reader["data"].ToString();
                     }
                 }
             }
@@ -48,12 +50,14 @@ namespace VkWeb.Models
 
         public String FindByIdGroup(int idGroup)
         {
-            String SQL = "SELECT * FROM Groups WHERE id = " + idGroup;
+            //String SQL = "SELECT * FROM Groups WHERE id = " + idGroup;
+            String SQL = "SELECT * FROM Groups WHERE id = @idGroup";
             String vkIDGroup = "";
             try
             {
                 MySqlCommand command = this.OpenConnection().CreateCommand();
                 command.CommandText = SQL;
+                command.Parameters.AddWithValue("@idGroup", idGroup);
                 command.ExecuteNonQuery();
                 using (MySqlDataReader reader = command.ExecuteReader())
                 {

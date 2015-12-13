@@ -23,7 +23,6 @@ namespace VkWeb.Controllers
         [HttpPost]
         public ActionResult Index(UserDataModel model)
         {
-            //model.CorrectDate();
             if (model.ComplianceTest())
             {
                       
